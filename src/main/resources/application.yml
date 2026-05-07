@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: fsp-sevastopol
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+#          issuer-uri: ${SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI:http://localhost:8081/realms/fsp-sevastopol}
+          issuer-uri: http://localhost:8081/realms/fsp-sevastopol
+          jwk-set-uri: http://keycloak:8080/realms/fsp-sevastopol/protocol/openid-connect/certs
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  grpc:
+    client:
+      executor:
+        address: 'static://localhost:50051'
+        negotiationType: plaintext
+
+app:
+  security:
+    realm-access-claim: realm_access
+    roles-claim: roles
+    role-prefix: ROLE_
